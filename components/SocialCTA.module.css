@@ -1,0 +1,261 @@
+/* ==========================================================================
+   Social CTA - Blue Sky, Plane from Left
+   ========================================================================== */
+
+.section {
+    position: relative;
+    min-height: 60vh;
+    padding: var(--space-3xl) 0;
+    overflow: hidden;
+    /* Page of Blue */
+    background: var(--color-sky);
+}
+
+/* --------------------------------------------------------------------------
+   Sky Background Elements
+   -------------------------------------------------------------------------- */
+.sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.cloud {
+    position: absolute;
+    top: var(--top, 30%);
+    right: -150px;
+    /* Start from right since moving left */
+    width: calc(120px * var(--size, 1));
+    height: calc(40px * var(--size, 1));
+    background: rgba(255, 255, 255, 0.9);
+    /* More opacity for contrast on blue */
+    border-radius: 50px;
+    animation: cloudFloat 20s ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 50%;
+    height: 100%;
+    top: -40%;
+    left: 20%;
+}
+
+.cloud::after {
+    width: 40%;
+    height: 80%;
+    top: -30%;
+    right: 25%;
+}
+
+@keyframes cloudFloat {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-120vw);
+        /* Move Left */
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Plane Assembly - Plane Left, Banner Right
+   -------------------------------------------------------------------------- */
+.planeAssembly {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 350px;
+    padding: var(--space-xl);
+}
+
+.planeWrapper {
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.15));
+    /* No order necessary, source order is correct */
+}
+
+.planeImage {
+    width: 400px;
+    height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Rope connecting Plane to Banner
+   -------------------------------------------------------------------------- */
+.rope {
+    width: 50px;
+    height: 4px;
+    background: var(--color-navy);
+    transform-origin: left center;
+    margin: 15px -8px 0 -8px;
+    z-index: 5;
+}
+
+/* --------------------------------------------------------------------------
+   Banner
+   -------------------------------------------------------------------------- */
+.banner {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    transform-origin: left center;
+}
+
+.bannerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gold);
+    padding: var(--space-md) var(--space-xl);
+    min-width: 250px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.bannerText {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-navy);
+    margin: 0 0 var(--space-xs) 0;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.bannerLinks {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.bannerLink {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-navy);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    opacity: 0.9;
+}
+
+.bannerLink:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.socialIcon {
+    width: 22px;
+    height: 22px;
+}
+
+.bannerDivider {
+    color: var(--color-navy);
+    opacity: 0.4;
+    font-size: var(--text-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Banner Tail (on Right side)
+   -------------------------------------------------------------------------- */
+.bannerTail {
+    position: relative;
+    width: 40px;
+    flex-shrink: 0;
+    margin-left: -1px;
+    /* Overlap to prevent gaps */
+}
+
+.tailSvg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .section {
+        min-height: 50vh;
+        padding: var(--space-2xl) 0;
+    }
+
+    .planeAssembly {
+        flex-direction: column;
+        gap: var(--space-md);
+        min-height: 300px;
+    }
+
+    .planeImage {
+        width: 300px;
+    }
+
+    .rope {
+        width: 4px;
+        height: 30px;
+        margin: -8px 0;
+    }
+
+    .bannerContent {
+        padding: var(--space-xl) var(--space-2xl);
+        min-width: 300px;
+    }
+
+    .bannerText {
+        font-size: var(--text-2xl);
+    }
+
+    .bannerTail {
+        display: none;
+    }
+
+    .bannerLinks {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .bannerDivider {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .planeAssembly {
+        padding: var(--space-md);
+    }
+
+    .bannerContent {
+        padding: var(--space-lg) var(--space-xl);
+        min-width: unset;
+    }
+
+    .bannerText {
+        font-size: var(--text-xl);
+        white-space: normal;
+        text-align: center;
+    }
+
+    .bannerLink span {
+        font-size: var(--text-sm);
+    }
+}

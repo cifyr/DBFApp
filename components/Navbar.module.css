@@ -1,0 +1,358 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    pointer-events: none;
+    /* Let clicks pass through empty space */
+    transition: background-color 0.3s ease;
+}
+
+.topbar {
+    width: 100%;
+    padding: var(--space-lg) var(--space-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.logo,
+.menuToggle {
+    pointer-events: auto;
+    /* Enable clicks back on elements */
+}
+
+.logo {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.logoLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.875rem;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    color: inherit;
+}
+
+.logo:hover .logoLink {
+    opacity: 0.7;
+}
+
+.logoIconSpacer {
+    display: block;
+    width: 2.9rem;
+    height: 2.9rem;
+    flex-shrink: 0;
+}
+
+.logoMarkOverlay {
+    position: fixed;
+    top: calc(var(--space-lg) + 1.45rem);
+    left: var(--space-xl);
+    transform: translateY(-50%);
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logoMarkOverlay img {
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.logoText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    max-width: min(32vw, 18rem);
+}
+
+.logoTitle,
+.logoSubtitle {
+    display: block;
+    line-height: 1.05;
+}
+
+.logoTitle {
+    font-family: var(--font-body);
+    font-size: clamp(0.58rem, 0.56rem + 0.28vw, 0.72rem);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    opacity: 1;
+}
+
+.logoSubtitle {
+    font-family: var(--font-display);
+    font-size: clamp(0.78rem, 0.74rem + 0.44vw, 1.02rem);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    opacity: 1;
+}
+
+.menuToggle {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.toggleRing {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    transition: all 0.3s ease;
+}
+
+.hamburgerLines {
+    width: 24px;
+    height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1003;
+}
+
+.line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+}
+
+.toneDark .topbar,
+.toneMenu .topbar {
+    color: var(--color-navy);
+}
+
+.toneLight .topbar {
+    color: var(--color-white);
+}
+
+.toneDark .logoMarkOverlay,
+.toneMenu .logoMarkOverlay {
+    border: 1px solid rgba(26, 51, 42, 0.18);
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 10px 24px rgba(26, 51, 42, 0.08);
+}
+
+.toneLight .logoMarkOverlay {
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+/* Backdrop */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 998;
+    pointer-events: auto;
+}
+
+/* Menu Panel */
+.menuPanel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: clamp(320px, 40vw, 450px);
+    height: 100vh;
+    background: #ffffff;
+    z-index: 999;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-shadow: -20px 0 50px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
+}
+
+.panelContent {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 6.5rem var(--space-xl) var(--space-2xl);
+}
+
+.linkList {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.linkItem {
+    position: relative;
+    padding: 1.5vh 0;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.linkItem:hover {
+    padding-left: 15px;
+}
+
+.linkNumber {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.linkLabel {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 4vh, 2.5rem);
+    font-weight: 700;
+    color: var(--color-navy);
+    margin-top: 2px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    transition: all 0.3s ease;
+}
+
+.linkItem:hover .linkLabel {
+    color: var(--color-pastel-red);
+}
+
+.linkUnderline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+    height: 2px;
+    background: var(--color-pastel-red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.linkItem:hover .linkUnderline {
+    transform: scaleX(1);
+}
+
+.ctaButton {
+    display: inline-block;
+    align-self: center;
+    /* Center it within the flex-column panelContent if applicable, but linkList is a column */
+    padding: 0.75rem 1.5rem;
+    background: var(--color-navy);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    margin-top: 3vh;
+    border: 2px solid var(--color-navy);
+}
+
+.ctaButton:hover {
+    background: transparent;
+    color: var(--color-navy);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.subLink {
+    padding-left: var(--space-xl);
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-xs);
+}
+
+.subLink .linkLabel {
+    font-size: clamp(1rem, 2.2vh, 1.6rem);
+    font-weight: 500;
+    color: rgba(28, 51, 42, 0.7);
+}
+
+@media (max-width: 900px) {
+    .logoText {
+        max-width: 13rem;
+    }
+
+    .logoTitle {
+        font-size: 0.56rem;
+    }
+
+    .logoSubtitle {
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .logoLink {
+        gap: 0.65rem;
+    }
+
+    .logoIconSpacer,
+    .logoMarkOverlay {
+        width: 2.45rem;
+        height: 2.45rem;
+    }
+
+    .logoMarkOverlay {
+        top: calc(var(--space-md) + 1.225rem);
+        left: var(--space-lg);
+    }
+
+    .logoText {
+        max-width: 9.5rem;
+    }
+
+    .logoTitle {
+        font-size: 0.5rem;
+        letter-spacing: 0.1em;
+    }
+
+    .logoSubtitle {
+        font-size: 0.64rem;
+        letter-spacing: 0.08em;
+    }
+
+    .menuPanel {
+        width: 100%;
+        border-left: none;
+    }
+
+    .panelContent {
+        padding: 5.5rem var(--space-xl) var(--space-2xl);
+        justify-content: flex-start;
+    }
+
+    .linkLabel {
+        font-size: clamp(1.5rem, 6vh, 2.5rem);
+    }
+}

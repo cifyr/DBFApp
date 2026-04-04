@@ -1,0 +1,177 @@
+/* ==========================================================================
+   Who We Are Section Styles
+   ========================================================================== */
+
+.section {
+    position: relative;
+    min-height: 100vh;
+    padding: var(--space-section) 0;
+    background: var(--color-white);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-xl);
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   Text Content
+   -------------------------------------------------------------------------- */
+.content {
+    padding-right: var(--space-xl);
+}
+
+.eyebrow {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-md);
+}
+
+.heading {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-navy);
+    margin-bottom: var(--space-lg);
+    line-height: 1.1;
+}
+
+.description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   Stats
+   -------------------------------------------------------------------------- */
+.stats {
+    display: flex;
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-soft-gray);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.statNumber {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-navy);
+    line-height: 1;
+}
+
+.statLabel {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   Image
+   -------------------------------------------------------------------------- */
+.imageWrapper {
+    position: relative;
+    transform: rotate(2deg);
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+}
+
+.imageCaption {
+    position: absolute;
+    bottom: -20px;
+    right: 30px;
+    background: var(--color-white);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.captionText {
+    font-family: var(--font-handwritten);
+    font-size: var(--text-lg);
+    color: var(--color-caption);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+
+    .content {
+        padding-right: 0;
+        order: 2;
+    }
+
+    .imageWrapper {
+        order: 1;
+        max-width: 500px;
+        margin: 0 auto;
+        transform: rotate(1deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: var(--space-2xl) 0;
+        min-height: auto;
+    }
+
+    .container {
+        padding: 0 var(--space-lg);
+    }
+
+    .stats {
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+    }
+
+    .stat {
+        flex: 1;
+        min-width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--space-sm);
+    }
+
+    .imageWrapper {
+        transform: rotate(0);
+    }
+}

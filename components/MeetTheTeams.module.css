@@ -1,0 +1,311 @@
+/* ==========================================================================
+   Meet The Teams Accordion Styles
+   ========================================================================== */
+
+.section {
+    position: relative;
+    min-height: 100vh;
+    background: var(--color-white);
+    padding: var(--space-section) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Heading
+   -------------------------------------------------------------------------- */
+.headingWrapper {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.eyebrow {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-sm);
+}
+
+.heading {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-navy);
+    margin: 0 0 var(--space-sm) 0;
+}
+
+.subheading {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-caption);
+    margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Accordion Container
+   -------------------------------------------------------------------------- */
+.accordion {
+    display: flex;
+    gap: 8px;
+    height: 450px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Panel
+   -------------------------------------------------------------------------- */
+.panel {
+    position: relative;
+    flex: 1;
+    min-width: 84px;
+    background: var(--team-color, var(--color-navy));
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+    transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.panel:hover,
+.panel:focus-visible {
+    flex: 1.5;
+    transform: translateY(-6px);
+    box-shadow: 0 22px 40px rgba(0, 0, 0, 0.16);
+    border-color: rgba(255, 255, 255, 0.48);
+    outline: none;
+}
+
+.panel.active {
+    flex: 5;
+}
+
+.panelPrompt:not(.active) {
+    animation: panelPromptBreath 5.6s ease-in-out infinite;
+}
+
+/* Panel Header (always visible) */
+.panelHeader {
+    position: absolute;
+    inset: 0;
+    padding: var(--space-lg) 0.4rem var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-md);
+    transition: opacity 0.3s ease;
+}
+
+.panel.active .panelHeader {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.panelIcon {
+    font-size: 1.85rem;
+    filter: grayscale(1) brightness(10);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.panelShortName {
+    font-family: var(--font-display);
+    font-size: clamp(1.08rem, 1.24vw, 1.58rem);
+    font-weight: 800;
+    color: var(--color-white);
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding: 0.2rem 0 0;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+}
+
+/* Panel Content (visible when active) */
+.panelContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+}
+
+.panel.active .panelContent {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.teamName {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-white);
+    margin: 0 0 var(--space-md) 0;
+}
+
+.teamDescription {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin: 0 0 var(--space-lg) 0;
+    max-width: 400px;
+}
+
+.learnMore {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    width: fit-content;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(4px);
+}
+
+.learnMore:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes panelPromptBreath {
+    0%, 100% {
+        scale: 1;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+        border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    50% {
+        scale: 1.02;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .accordion {
+        height: 400px;
+    }
+
+    .panel {
+        min-width: 50px;
+    }
+
+    .panelShortName {
+        font-size: 1.02rem;
+    }
+
+    .panelContent {
+        padding: var(--space-lg);
+    }
+}
+
+@media (max-width: 1024px) and (orientation: portrait),
+(max-width: 768px) {
+    .section {
+        padding: var(--space-2xl) var(--space-lg);
+        min-height: auto;
+    }
+
+    .accordion {
+        flex-direction: column;
+        height: auto;
+        gap: var(--space-md);
+    }
+
+    .panel {
+        min-width: 100%;
+        height: 80px;
+        transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        flex: none;
+    }
+
+    .panel:hover {
+        flex: none;
+        height: 90px;
+        transform: none;
+    }
+
+    .panel.active {
+        flex: none;
+        height: 320px;
+    }
+
+    .panelHeader {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        inset: auto 0 auto 0;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 80px;
+        padding: 0 var(--space-lg);
+        gap: var(--space-md);
+    }
+
+    .panelIcon {
+        font-size: 1.8rem;
+    }
+
+    .panelShortName {
+        writing-mode: horizontal-tb;
+        transform: none;
+        font-size: clamp(0.9rem, 3vw, 1.05rem);
+        letter-spacing: 0.05em;
+        text-align: right;
+        justify-content: flex-end;
+        margin-top: 0;
+        margin-left: auto;
+        padding: 0;
+        flex: 1;
+    }
+
+    .panelContent {
+        padding: var(--space-lg);
+        padding-top: 90px;
+        justify-content: flex-start;
+    }
+
+    .teamDescription {
+        display: block;
+        font-size: var(--text-sm);
+        max-width: 100%;
+    }
+
+    .panelPrompt:not(.active) {
+        animation: none;
+    }
+}

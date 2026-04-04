@@ -1,0 +1,15 @@
+.curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    /* White curtain */
+    z-index: 9999;
+    /* Top of everything */
+    opacity: 1;
+    /* Start opaque (white) for initial load, handled by JS */
+    pointer-events: none;
+    /* Let clicks pass through when hidden/opacity 0 */
+}
