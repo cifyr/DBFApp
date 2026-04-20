@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/framer-motion';
 import styles from './Templates.module.css';
 
 export default function SubTeamHero({ title, description }) {

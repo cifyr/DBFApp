@@ -315,9 +315,21 @@ export default function TeamCarousel({ carousel }) {
         return null;
     }
 
+    const activeItem = items[activeIndex];
     const trackOffset = constrainedSizes
         .slice(0, activeIndex)
         .reduce((totalWidth, size) => totalWidth + (size?.width || 0), 0);
+
+    const activeNaturalSize = imageSizes[activeIndex];
+    const activeOrientation = activeNaturalSize
+        ? activeNaturalSize.height > activeNaturalSize.width ? 'portrait' : 'landscape'
+        : 'landscape';
+    const hasCaptionContent = Boolean(activeItem?.caption || activeItem?.description);
+    const layoutClass = hasCaptionContent
+        ? activeOrientation === 'portrait'
+            ? styles.carouselLayoutPortrait
+            : styles.carouselLayoutLandscape
+        : '';
 
     return (
         <section className={styles.carouselSection} aria-label={heading}>
@@ -352,10 +364,13 @@ export default function TeamCarousel({ carousel }) {
             </div>
 
             <div
+                className={`${styles.carouselLayout} ${layoutClass}`}
+                style={{ '--carousel-max-height': maxHeight }}
+            >
+            <div
                 ref={stageRef}
                 className={styles.carouselStage}
                 style={{
-                    '--carousel-max-height': maxHeight,
                     ...(stageHeight ? { minHeight: `${stageHeight}px` } : {}),
                 }}
             >
@@ -399,9 +414,17 @@ export default function TeamCarousel({ carousel }) {
                 </div>
             </div>
 
-            {items[activeIndex]?.caption && (
-                <p className={styles.carouselCaption}>{items[activeIndex].caption}</p>
+            {hasCaptionContent && (
+                <div className={styles.carouselCaption}>
+                    {activeItem.caption && (
+                        <p className={styles.carouselCaptionTitle}>{activeItem.caption}</p>
+                    )}
+                    {activeItem.description && (
+                        <p className={styles.carouselDescription}>{activeItem.description}</p>
+                    )}
+                </div>
             )}
+            </div>
 
             {hasMultipleItems && (
                 <div className={styles.carouselDots} role="tablist" aria-label={`${heading} slides`}>

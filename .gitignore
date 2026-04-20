@@ -1,10 +1,17 @@
 node_modules/
+.next
 .next/
+.next-dev
 .next-dev/
 .next-stale-*/
+# macOS iCloud conflict duplicates (e.g. ".next 2", ".next-dev 3")
+.next [0-9]*
+.next-dev [0-9]*
+out
 out/
 .DS_Store
 .codex/
+.claude/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

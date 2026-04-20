@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/framer-motion';
+import ProgressiveHeadshot from '@/components/ProgressiveHeadshot';
 import styles from './Templates.module.css';
 
 export default function TeamLegacy({ legacy }) {
@@ -30,7 +31,12 @@ export default function TeamLegacy({ legacy }) {
                             transition={{ delay: i * 0.1 }}
                         >
                             <div className={styles.legacyImageFrame}>
-                                <img src={leader.image} alt={leader.name} className={styles.legacyImage} />
+                                <ProgressiveHeadshot
+                                    src={leader.image}
+                                    alt={leader.name}
+                                    className={styles.legacyImage}
+                                    fallbackName={leader.name}
+                                />
                             </div>
                             <div className={styles.legacyInfo}>
                                 <span className={styles.legacyYear}>{leader.year}</span>

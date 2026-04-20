@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/framer-motion';
 import { formatPersonAcademicInfo } from '@/data/people';
+import ProgressiveHeadshot from '@/components/ProgressiveHeadshot';
 import TeamCarousel from './TeamCarousel';
 import styles from './Templates.module.css';
 
@@ -73,13 +74,11 @@ export default function SubTeamContent({ about, carousel, leaders }) {
                             transition={{ delay: i * 0.1 }}
                         >
                             <div className={styles.leaderImageWrapper}>
-                                <img
+                                <ProgressiveHeadshot
                                     src={leader.image || `https://ui-avatars.com/api/?name=${leader.name}&background=random`}
                                     alt={leader.name}
                                     className={styles.leaderImage}
-                                    onError={(e) => {
-                                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(leader.name)}&background=1C332A&color=fff&size=200`;
-                                    }}
+                                    fallbackName={leader.name}
                                 />
                             </div>
                             <h4 className={styles.leaderName}>{leader.name}</h4>

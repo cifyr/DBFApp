@@ -1,0 +1,26 @@
+.root {
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
+.layer {
+    grid-area: 1 / 1;
+    transition: opacity 0.24s ease;
+}
+
+.lowVisible {
+    opacity: 1;
+}
+
+.lowHidden {
+    opacity: 0;
+}
+
+.highHidden {
+    opacity: 0;
+}
+
+.highVisible {
+    opacity: 1;
+}

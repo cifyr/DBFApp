@@ -128,12 +128,30 @@ export default function SocialCTA() {
                         <div className={styles.bannerLinks}>
                             {homeContent.socialCTA.links.map((link, idx) => {
                                 const Icon = IconMap[link.iconType] || null;
+                                const linkContent = (
+                                    <>
+                                        {Icon && <Icon />}
+                                        <span>{link.label}</span>
+                                    </>
+                                );
+
                                 return (
                                     <span key={idx} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <TransitionLink href={link.url} className={styles.bannerLink} aria-label={link.ariaLabel}>
-                                            {Icon && <Icon />}
-                                            <span>{link.label}</span>
-                                        </TransitionLink>
+                                        {link.openInNewTab ? (
+                                            <a
+                                                href={link.url}
+                                                className={styles.bannerLink}
+                                                aria-label={link.ariaLabel}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {linkContent}
+                                            </a>
+                                        ) : (
+                                            <TransitionLink href={link.url} className={styles.bannerLink} aria-label={link.ariaLabel}>
+                                                {linkContent}
+                                            </TransitionLink>
+                                        )}
                                         {idx < homeContent.socialCTA.links.length - 1 && (
                                             <span className={styles.bannerDivider}>•</span>
                                         )}
