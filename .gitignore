@@ -9,6 +9,9 @@ node_modules/
 .next-dev [0-9]*
 out
 out/
+# Deployment archives produced by zipping out/ (and iCloud-unpacked copies)
+dbfapp-deploy-*.zip
+dbfapp-deploy-[0-9]*/
 .DS_Store
 .codex/
 .claude/

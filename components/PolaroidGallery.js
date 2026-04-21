@@ -320,67 +320,93 @@ export default function PolaroidGallery() {
                         </div>
 
                         <div className={styles.infoColumn}>
-                            <section className={styles.infoCard}>
-                                <span className={styles.infoLabel}>Design report</span>
-                                {activePlane.reportUrl ? (
-                                    <a
-                                        href={activePlane.reportUrl}
-                                        className={styles.reportLink}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        download={activePlane.reportUrl.startsWith('/') ? '' : undefined}
-                                    >
-                                        {activePlane.reportLabel}
-                                    </a>
-                                ) : (
-                                    <p className={styles.infoText}>{activePlane.reportLabel}</p>
-                                )}
-                            </section>
-
-                            <section className={styles.infoCard}>
-                                <span className={styles.infoLabel}>Aircraft overview</span>
-                                <p className={styles.infoText}>{activePlane.overview}</p>
-                                <p className={styles.infoText}>{activePlane.buildGist}</p>
-                            </section>
-
-                            <section className={styles.infoCard}>
-                                <span className={styles.infoLabel}>Season notes</span>
-                                <ul className={styles.infoList}>
-                                    {activePlane.competitionStructure.map((item) => (
-                                        <li key={item}>{item}</li>
-                                    ))}
-                                </ul>
-                            </section>
-                        </div>
-
-                        <section className={`${styles.infoCard} ${styles.leadershipCard}`}>
-                            <div className={styles.leadershipHeader}>
-                                <span className={styles.infoLabel}>Leadership</span>
-                                <p className={styles.infoText}>
-                                    {activePlane.leadershipImage.caption}
-                                </p>
-                            </div>
-
-                            {activePlane.leadershipImage.src ? (
-                                <div className={styles.leadershipMedia}>
-                                    <img
-                                        src={activePlane.leadershipImage.src}
-                                        alt={activePlane.leadershipImage.alt}
-                                        className={styles.leadershipImage}
-                                    />
-                                </div>
-                            ) : (
-                                <div className={styles.leadershipPlaceholder}>
-                                    Add a leadership PNG for {activePlane.year} in <code>data/homeContent.js</code>.
-                                </div>
+                            {(activePlane.reportUrl || activePlane.resources?.length > 0) && (
+                                <section className={styles.infoCard}>
+                                    <span className={styles.infoLabel}>Design report</span>
+                                    {activePlane.reportUrl && (
+                                        <a
+                                            href={activePlane.reportUrl}
+                                            className={styles.reportLink}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            download={activePlane.reportUrl.startsWith('/') ? '' : undefined}
+                                        >
+                                            {activePlane.reportLabel || 'Download the design report (PDF)'}
+                                        </a>
+                                    )}
+                                    {activePlane.resources?.length > 0 && (
+                                        <ul className={styles.resourceList}>
+                                            {activePlane.resources.map((resource) => (
+                                                <li key={resource.url}>
+                                                    <a
+                                                        href={resource.url}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        download={resource.url.startsWith('/') ? '' : undefined}
+                                                    >
+                                                        {resource.label}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </section>
                             )}
 
-                            <ul className={styles.infoList}>
-                                {activePlane.leadArchitecture.map((item) => (
-                                    <li key={item}>{item}</li>
-                                ))}
-                            </ul>
-                        </section>
+                            {(activePlane.overview || activePlane.buildGist) && (
+                                <section className={styles.infoCard}>
+                                    <span className={styles.infoLabel}>Aircraft overview</span>
+                                    {activePlane.overview && (
+                                        <p className={styles.infoText}>{activePlane.overview}</p>
+                                    )}
+                                    {activePlane.buildGist && (
+                                        <p className={styles.infoText}>{activePlane.buildGist}</p>
+                                    )}
+                                </section>
+                            )}
+
+                            {activePlane.competitionStructure?.length > 0 && (
+                                <section className={styles.infoCard}>
+                                    <span className={styles.infoLabel}>Season notes</span>
+                                    <ul className={styles.infoList}>
+                                        {activePlane.competitionStructure.map((item) => (
+                                            <li key={item}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </section>
+                            )}
+                        </div>
+
+                        {(activePlane.leadershipImage?.src || activePlane.leadArchitecture?.length > 0) && (
+                            <section className={`${styles.infoCard} ${styles.leadershipCard}`}>
+                                <div className={styles.leadershipHeader}>
+                                    <span className={styles.infoLabel}>Leadership</span>
+                                    {activePlane.leadershipImage?.src && activePlane.leadershipImage?.caption && (
+                                        <p className={styles.infoText}>
+                                            {activePlane.leadershipImage.caption}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {activePlane.leadershipImage?.src && (
+                                    <div className={styles.leadershipMedia}>
+                                        <img
+                                            src={activePlane.leadershipImage.src}
+                                            alt={activePlane.leadershipImage.alt}
+                                            className={styles.leadershipImage}
+                                        />
+                                    </div>
+                                )}
+
+                                {activePlane.leadArchitecture?.length > 0 && (
+                                    <ul className={styles.infoList}>
+                                        {activePlane.leadArchitecture.map((item) => (
+                                            <li key={item}>{item}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>,

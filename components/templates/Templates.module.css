@@ -315,55 +315,6 @@
     letter-spacing: 0.08em;
 }
 
-.carouselLayout {
-    display: flex;
-    width: 100%;
-    gap: var(--space-lg);
-}
-
-.carouselLayoutPortrait {
-    flex-direction: row;
-    align-items: stretch;
-}
-
-.carouselLayoutPortrait .carouselStage {
-    flex: 1 1 50%;
-    max-width: 50%;
-    min-width: 0;
-}
-
-.carouselLayoutPortrait .carouselCaption {
-    flex: 1 1 50%;
-    max-width: 50%;
-    margin: 0;
-    padding: var(--space-lg);
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.carouselLayoutLandscape {
-    flex-direction: column;
-    align-items: stretch;
-}
-
-.carouselLayoutLandscape .carouselStage {
-    flex: 0 0 auto;
-    width: 100%;
-}
-
-.carouselLayoutLandscape .carouselCaption {
-    max-width: none;
-    width: 100%;
-    min-height: var(--carousel-max-height, 50vh);
-    padding: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .carouselStage {
     display: flex;
     align-items: center;
@@ -676,19 +627,6 @@
     .carouselControls {
         width: 100%;
         justify-content: space-between;
-    }
-
-    .carouselLayoutPortrait {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .carouselLayoutPortrait .carouselStage,
-    .carouselLayoutPortrait .carouselCaption {
-        flex: 1 1 auto;
-        max-width: 100%;
-        text-align: center;
-        align-items: center;
     }
 
     .heroSection {

@@ -16,6 +16,7 @@ export const photos = {
             plane2024: '/images/2024.jpeg',
             plane2023: '/images/2023.jpg',
             plane2022: '/images/2022.png',
+            plane2021: '/images/2021.jpg',
             plane2020: '/images/2020.jpg',
             plane2019: '/images/2019.jpeg',
             plane2018: '/images/2018.jpg',
