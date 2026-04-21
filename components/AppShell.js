@@ -6,12 +6,14 @@ import { PageTransitionProvider } from '@/components/PageTransition';
 export default function AppShell({ children }) {
     const lenisRef = useRef(null);
     const gsapRef = useRef(null);
+    const scrollLockCountRef = useRef(0);
 
     useEffect(() => {
         let mounted = true;
         let cleanupTicker = null;
         let handleHashScroll = null;
         let handleAutoScroll = null;
+        let handleScrollLock = null;
 
         const setupSmoothScroll = async () => {
             const [{ default: Lenis }, { gsap }, { ScrollTrigger }] = await Promise.all([
@@ -70,9 +72,29 @@ export default function AppShell({ children }) {
                 });
             };
 
+            handleScrollLock = (event) => {
+                const shouldLock = Boolean(event.detail?.locked);
+
+                scrollLockCountRef.current = shouldLock
+                    ? scrollLockCountRef.current + 1
+                    : Math.max(0, scrollLockCountRef.current - 1);
+
+                if (scrollLockCountRef.current > 0) {
+                    lenis.stop();
+                    return;
+                }
+
+                lenis.start();
+            };
+
             window.addEventListener('hero-auto-scroll', handleAutoScroll);
             window.addEventListener('hashchange', handleHashScroll);
+            window.addEventListener('dbf-scroll-lock', handleScrollLock);
             handleHashScroll();
+
+            if (scrollLockCountRef.current > 0) {
+                lenis.stop();
+            }
 
             const tick = (time) => {
                 lenis.raf(time * 1000);
@@ -91,6 +113,7 @@ export default function AppShell({ children }) {
             if (cleanupTicker) cleanupTicker();
             if (handleAutoScroll) window.removeEventListener('hero-auto-scroll', handleAutoScroll);
             if (handleHashScroll) window.removeEventListener('hashchange', handleHashScroll);
+            if (handleScrollLock) window.removeEventListener('dbf-scroll-lock', handleScrollLock);
             if (lenisRef.current) lenisRef.current.destroy();
         };
     }, []);

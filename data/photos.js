@@ -41,7 +41,7 @@ export const photos = {
             },
             propulsion: {
                 evelyn: '/headshots/evelyn.png',
-                yahir: '/headshots/yahir.jpg', // Initial fallback
+                yahir: '/headshots/yahir.jpg',
             },
             manufacturing: {
                 preston: '/headshots/preston.png',
@@ -51,7 +51,7 @@ export const photos = {
                 ruth: '/headshots/ruth.jpeg',
             },
             dev: {
-                mischa: '/headshots/mischa.png',
+                mischa: '/headshots/mischa.jpeg',
             }
         },
         admin: {

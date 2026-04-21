@@ -1,6 +1,6 @@
 'use client';
 
-import { useScroll, useTransform, motion, useSpring, useMotionValueEvent, useVelocity } from 'framer-motion';
+import { useScroll, useTransform, motion, useSpring, useMotionValueEvent, useVelocity } from '@/lib/framer-motion';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import styles from './Hero.module.css';
 import { homeContent } from '@/data/homeContent';

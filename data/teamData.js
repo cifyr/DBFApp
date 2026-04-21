@@ -9,36 +9,97 @@ const getHomeTeamDescription = (teamId) => homeTeamDescriptions[teamId];
 
 const teamCarouselMedia = {
     aerodynamics: [
-        { src: '/images/Carousel/aero1.png', alt: 'Aero+Payload design work' },
-        { src: '/images/Carousel/aero2.png', alt: 'Aero+Payload analysis session' },
-        { src: '/images/Carousel/aero3.png', alt: 'Aero+Payload testing and iteration' },
+        {
+            src: '/images/Carousel/aero1.png',
+            alt: 'Aero+Payload design work',
+            description: 'Early layout studies help the team compare wing, tail, and payload concepts before the aircraft geometry is finalized.',
+        },
+        {
+            src: '/images/Carousel/aero2.png',
+            alt: 'Aero+Payload analysis session',
+            description: 'Analysis work connects stability and control predictions to the mission requirements driving the design.',
+        },
+        {
+            src: '/images/Carousel/aero3.png',
+            alt: 'Aero+Payload testing and iteration',
+            description: 'Testing and iteration refine aerodynamic choices before the rest of the airplane is committed to build.',
+        },
     ],
     structures: [
         {
             src: '/images/Carousel/stuctures1.png',
             displaySrc: '/images/Carousel/structures1-centered.png',
             alt: 'Structures CAD and design work',
+            description: 'Full-aircraft CAD lets the team study packaging, manufacturability, and how the airframe fits together.',
         },
-        { src: '/images/Carousel/structures2.png', alt: 'Structures analysis and modeling' },
-        { src: '/images/Carousel/structures3.png', alt: 'Structures team build detail' },
+        {
+            src: '/images/Carousel/structures2.png',
+            alt: 'Structures analysis and modeling',
+            description: 'Structural analysis highlights where loads concentrate so critical parts can be strengthened without adding unnecessary mass.',
+        },
+        {
+            src: '/images/Carousel/structures3.png',
+            alt: 'Structures team build detail',
+            description: 'Detailed internal design work turns the concept into parts that can move cleanly into manufacturing.',
+        },
     ],
     propulsion: [
-        { src: '/images/Carousel/propulsion1.png', alt: 'Propulsion system testing' },
-        { src: '/images/Carousel/propulsion2.png', alt: 'Propulsion hardware setup' },
+        {
+            src: '/images/Carousel/propulsion1.png',
+            alt: 'Propulsion system testing',
+            description: 'Bench testing compares motor, propeller, and battery combinations to find efficient thrust for the mission.',
+        },
+        {
+            src: '/images/Carousel/propulsion2.png',
+            alt: 'Propulsion hardware setup',
+            description: 'Instrumented hardware setups let the team validate propulsion performance before the aircraft flies.',
+        },
     ],
     manufacturing: [
-        { src: '/images/Carousel/manufacturing1.jpg', alt: 'Manufacturing shop work' },
-        { src: '/images/Carousel/manufacturing2.jpg', alt: 'Manufacturing build process' },
+        {
+            src: '/images/Carousel/manufacturing1.jpg',
+            alt: 'Manufacturing shop work',
+            description: 'Shop work turns drawings into real parts through cutting, layups, assembly, and repeated process refinement.',
+        },
+        {
+            src: '/images/Carousel/manufacturing2.jpg',
+            alt: 'Manufacturing build process',
+            description: 'Hands-on build time helps the team understand tolerances, materials, and how the design behaves in reality.',
+        },
     ],
     electrics: [
-        { src: '/images/Carousel/avionics1.jpg', alt: 'Avionics wiring and controls work' },
-        { src: '/images/Carousel/avionics2.jpg', alt: 'Avionics integration and setup' },
-        { src: '/images/Carousel/avionics3.jpg', alt: 'Avionics testing and data logging' },
+        {
+            src: '/images/Carousel/avionics1.jpg',
+            alt: 'Avionics wiring and controls work',
+            description: 'Controls integration connects servos, receivers, and wiring so the aircraft responds reliably in the air.',
+        },
+        {
+            src: '/images/Carousel/avionics2.jpg',
+            alt: 'Avionics integration and setup',
+            description: 'Electronics setup supports clean packaging, repeatable testing, and dependable system bring-up.',
+        },
+        {
+            src: '/images/Carousel/avionics3.jpg',
+            alt: 'Avionics testing and data logging',
+            description: 'Data logging captures useful test information that feeds back into flight readiness and design decisions.',
+        },
     ],
     dev: [
-        { src: '/images/Carousel/simdev1.png', alt: 'Simulation Development model output' },
-        { src: '/images/Carousel/simdev2.png', alt: 'Simulation Development analysis tools' },
-        { src: '/images/Carousel/simdev3.gif', alt: 'Simulation Development animated result' },
+        {
+            src: '/images/Carousel/simdev1.png',
+            alt: 'Simulation Development model output',
+            description: 'Simulation outputs help the team compare concepts before committing time and materials to a build.',
+        },
+        {
+            src: '/images/Carousel/simdev2.png',
+            alt: 'Simulation Development analysis tools',
+            description: 'Custom analysis tools make it easier to study trends, sensitivities, and tradeoffs across the aircraft.',
+        },
+        {
+            src: '/images/Carousel/simdev3.gif',
+            alt: 'Simulation Development animated result',
+            description: 'Dynamic visualizations show how the model responds as assumptions change and help guide early design choices.',
+        },
     ],
     admin: [],
 };
@@ -66,7 +127,7 @@ export const teamData = [
         heroImage: photos.teams.aerodynamics.hero,
         carousel: buildCarouselConfig('aerodynamics'),
         about: {
-            heading: 'Lift, Drag, Stability, and Payload',
+            heading: 'Aerodynamic Stability and Payload Design',
             content: [
                 "The Aero+Payload subteam sizes the wing and tail, studies stability and control, and designs mission payload systems so the aircraft can complete the course requirements. Members use tools like XFLR5, CFD, and CAD to compare design options and understand how aerodynamic choices affect the rest of the airplane. It is a good place to build intuition for aircraft performance while working on both core flight surfaces and mission hardware."
             ],

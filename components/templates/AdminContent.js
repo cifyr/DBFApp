@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/framer-motion';
 import { formatPersonAcademicInfo } from '@/data/people';
+import ProgressiveHeadshot from '@/components/ProgressiveHeadshot';
 import TeamCarousel from './TeamCarousel';
 import styles from './Templates.module.css';
 
@@ -37,13 +38,11 @@ export default function AdminContent({ about, carousel, adminLeaders }) {
                     >
                         <div className={styles.adminLeaderProfile}>
                             <div className={styles.adminImageWrapper}>
-                                <img
+                                <ProgressiveHeadshot
                                     src={leader.image || `https://ui-avatars.com/api/?name=${leader.name}&background=random`}
                                     alt={leader.name}
                                     className={styles.adminImage}
-                                    onError={(e) => {
-                                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(leader.name)}&background=1C332A&color=fff&size=200`;
-                                    }}
+                                    fallbackName={leader.name}
                                 />
                             </div>
                             <h4 className={styles.adminName}>{leader.name}</h4>

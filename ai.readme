@@ -1,0 +1,309 @@
+# ai.readme — Briefing for AI Agents Working on This Repo
+
+**Audience:** an AI coding assistant (Claude, GPT, Copilot, etc.) picking up this repo cold
+and being asked to make changes. This file exists so you can get oriented without a human
+walkthrough.
+
+**If you are a human, read `README.md` instead.** This file is denser, more opinionated, and
+assumes you can follow code across files without hand-holding.
+
+---
+
+## 1. Project in one paragraph
+
+This is the marketing / recruitment / legacy site for **Washington University in St. Louis
+Design-Build-Fly** (DBF), a student aircraft competition team. It is a **Next.js 14 App
+Router** project configured for **static export** (`output: 'export'` in `next.config.js`).
+The site is content-driven: almost all copy, image paths, roster data, and per-team config
+live as plain JS object literals under `data/`. Components under `components/` read those
+objects and render them. There is **no backend, no DB, no runtime server** — `npm run build`
+emits plain HTML/CSS/JS into `out/`, which is uploaded to **DreamHost** via SFTP/rsync.
+
+Repo: `https://github.com/cifyr/DBFApp`. Main branch: `main`.
+
+---
+
+## 2. Environment constraints (read before coding)
+
+| Constraint | Detail |
+| --- | --- |
+| **Node version** | Use **Node 20 or 22**. Node 24 is broken — Next 14.2's `require-hook.js` throws `ERR_INVALID_PACKAGE_CONFIG` intermittently against the bundled `dist/compiled/*/package.json` files. On macOS: `brew install node@22` and put `/opt/homebrew/opt/node@22/bin` first in PATH. |
+| **Next version** | 14.2.x (currently resolves to 14.2.35). Do not upgrade to 15.x casually — would touch the App Router conventions and force changes across every route. |
+| **Package manager** | npm (there is a `package-lock.json`). Don't introduce yarn/pnpm without a reason. |
+| **iCloud Desktop sync** | The working copy lives under `~/Desktop`, which is iCloud-synced. iCloud occasionally desyncs files inside `node_modules/` and `vendor/framer-motion/`, producing "Module not found" errors mid-build. If you see module-resolution errors that look impossible, reinstall deps or re-extract the vendored tarball (see §6). |
+| **Static export** | No API routes, no server actions, no `fetch` with caching at request time, no `cookies()`/`headers()` reads. If the task requires any of those, you have to redesign it (e.g. external API) or push back on the requirement. |
+
+---
+
+## 3. File-by-file map
+
+```
+app/
+├── layout.js                     Root <html>/<body>, metadata, mounts AppShell
+├── layout 2.js                   STALE iCloud duplicate — ignore, don't edit
+├── globals.css                   CSS variables (--color-*, --space-*, --text-*, --font-*, --shadow-*, --radius-*)
+├── page.js                       Homepage — composes Hero, MissionSection, WhoWeAre,
+│                                 PolaroidGallery (past aircraft), MeetThePresidents,
+│                                 MeetTheTeams, JoinSection, Sponsors, SocialCTA, Footer
+├── join/page.js                  /join
+├── partners/page.js              /partners
+├── photos/page.js                /photos — internal dashboard
+└── team/[slug]/page.js           /team/:slug — dynamic, uses generateStaticParams()
+                                  Renders AdminContent for slug='admin', else SubTeamContent
+
+components/
+├── AppShell.js                   Client wrapper: sets up Lenis smooth scroll + GSAP
+│                                 ScrollTrigger, handles hash scroll, page-transition context
+├── Navbar.js / Footer.js         Site chrome; data from data/homeContent.js
+├── Hero.js                       Homepage hero (GSAP animations)
+├── MissionSection.js             Homepage mission block
+├── WhoWeAre.js                   Homepage "who we are" block
+├── PolaroidGallery.js            Homepage past-aircraft polaroid gallery + modal
+├── MeetThePresidents.js          Homepage presidents row
+├── MeetTheTeams.js               Homepage team grid with per-team cards
+├── JoinSection.js                Homepage join CTA
+├── Sponsors.js                   Homepage sponsor logos
+├── SocialCTA.js                  Homepage social CTA block (uses next/image)
+├── ProgressiveHeadshot.js        <img> with blur-in load + initial-based fallback
+├── PageTransition.js             Context + overlay for route transitions
+├── TransitionLink.js             <Link> wrapper that triggers the transition overlay
+└── templates/
+    ├── SubTeamHero.js            Team-page hero
+    ├── SubTeamContent.js         Regular team layout: about + carousel + leaders + TeamLegacy
+    ├── AdminContent.js           Special layout for /team/admin
+    ├── TeamCarousel.js           Per-team image carousel.
+    │                             Auto-detects portrait vs landscape from each slide's
+    │                             natural dimensions and switches caption position:
+    │                               portrait  → caption on the right, 50/50 split
+    │                               landscape → caption below, min-height = max carousel height
+    │                             Mobile (≤768px) collapses portrait layout to stacked.
+    ├── TeamLegacy.js             Legacy & leadership grid (per-team)
+    └── Templates.module.css      Styles for the entire templates/ family
+
+data/                             ⭐ Content layer. Modify here for 90% of requests.
+├── homeContent.js                Home page copy, nav, footer, brand, past aircraft,
+│                                 sponsors, join text. Exports `homeContent` (large object).
+├── teamData.js                   Array of team configs (slug, title, description,
+│                                 heroImage, about, carousel, ...).
+│                                 Also exports teamCarouselMedia keyed by slug.
+├── people.js                     Exports:
+│                                 - presidents (array)
+│                                 - teamLeaders (object keyed by team slug)
+│                                 - adminLeaders (array)
+│                                 - formatPersonAcademicInfo(person) helper
+└── photos.js                     Exports `photos` — nested object of asset paths.
+                                  Source of truth for all image URLs.
+
+lib/
+└── framer-motion.js              Re-export shim: `export * from '../vendor/framer-motion/dist/es/index.mjs'`.
+                                  **Always import framer-motion APIs from '@/lib/framer-motion',
+                                  never from 'framer-motion' directly** — the direct package can
+                                  become partially desynced by iCloud.
+
+vendor/
+└── framer-motion/                Unpacked copy of framer-motion@11.18.2. Source is
+                                  framer-motion-11.18.2.tgz at repo root; re-extract if broken.
+
+scripts/
+├── prepare-next-runtime.mjs      Symlinks ./.next (or ./.next-dev) to /tmp/dbfapp-next-runtime/
+│                                 Runs automatically via predev/prebuild hooks.
+└── clean-runtime-state.mjs       Removes those symlinks.
+
+public/
+├── images/                       General site images (2018.jpg, 2019.jpeg, home.jpg, etc.)
+├── images/Carousel/              Carousel images referenced by data/teamData.js
+├── headshots/                    People photos referenced by data/people.js via data/photos.js
+├── frames/                       UI frame assets
+└── plane.svg                     Homepage plane graphic
+
+next.config.js                    output: 'export', trailingSlash: true, images.unoptimized: true
+jsconfig.json                     "@/*" → "./*" path alias
+package.json                      Scripts: dev, build, start, predev, prebuild, clean:runtime
+framer-motion-11.18.2.tgz         Source for vendor/framer-motion — do not delete
+out/                              Build output, gitignored
+```
+
+---
+
+## 4. Conventions & contracts
+
+### Imports
+- Always import modules via the `@/` alias for paths relative to repo root.
+- **Framer Motion must come from `@/lib/framer-motion`**, never the npm package directly.
+- CSS Modules: `import styles from './Thing.module.css'`. Don't rename classes without
+  updating the `.module.css` pair.
+
+### Styling
+- Tokens in `app/globals.css`. Examples: `var(--color-navy)`, `var(--space-lg)`,
+  `var(--text-xl)`, `var(--shadow-md)`, `var(--radius-lg)`, `var(--color-caption)`.
+- Prefer existing tokens over hardcoded values. If you must hardcode, stay consistent with
+  nearby code.
+- No Tailwind, no styled-components, no emotion. Don't introduce a new styling system.
+- Responsive breakpoint currently in use: `@media (max-width: 768px)`.
+
+### Data shape expectations
+
+- `data/homeContent.js` is a single giant object with many subtrees. Preserve its shape when
+  editing — components dereference specific keys (`homeContent.pastAircraft.aircraft`,
+  `homeContent.teamsSection.teams`, etc.). Rename a key → something breaks silently.
+- `data/teamData.js` exports `teamData` (array). Each item:
+  ```ts
+  {
+    slug: string,            // URL segment; also used as key in teamLeaders
+    title: string,
+    description: string,
+    heroImage: string,
+    about: { heading: string, content: string[], images?: Array<{src,alt}> },
+    carousel: { heading: string, maxHeight: string, items: CarouselItem[] },
+  }
+  ```
+  `CarouselItem`: `{ src, displaySrc?, alt, caption?, description? }`.
+- `data/people.js` uses `formatPersonAcademicInfo(person)` for display; keep shape
+  `{ name, major, gradYear, email, image }`.
+- `data/photos.js` is a nested plain object. Don't flatten it.
+
+### Routing
+- Adding a new static route = create `app/<name>/page.js` (default export React component).
+- Adding a new team page = add an entry to `data/teamData.js` with a new `slug`. The dynamic
+  route (`app/team/[slug]/page.js`) already has `generateStaticParams` consuming `teamData`.
+- `trailingSlash: true` means routes emit as `foo/index.html`. Static hosts like DreamHost
+  resolve `/foo/` cleanly.
+
+### Client vs Server components
+- Every component that uses hooks or browser APIs starts with `'use client';`. Most do.
+- `app/layout.js` is a server component; it imports `AppShell` (client) to wrap children.
+- Do not mark a server component `'use client'` unless you're certain.
+
+### Accessibility
+- Existing components use sensible `aria-label`s on icon buttons and `role`s on groups
+  (see `TeamCarousel`). Preserve those when editing.
+
+---
+
+## 5. Common task patterns
+
+### "Change the text on the homepage that says X"
+1. Grep for X in `data/homeContent.js`.
+2. If found, edit there — done.
+3. If not found, grep in `components/` — it may be a hardcoded string; hoist it into
+   `data/homeContent.js` as part of the fix.
+
+### "Change an image"
+1. Drop the new file into the appropriate `public/` subfolder.
+2. Update the corresponding path in `data/photos.js`.
+3. Rebuild; no component change needed unless you're adding a new image slot.
+
+### "Add a new sub-team"
+1. Add an entry to `data/teamData.js` with a unique `slug`, populated `about` and `carousel`.
+2. Add photos under `public/images/...` and register them in `data/photos.js`.
+3. Add leads under `teamLeaders[<slug>]` in `data/people.js`.
+4. Add the new team card to `homeContent.teamsSection.teams` in `data/homeContent.js`.
+5. `npm run build` — the dynamic route regenerates.
+
+### "Change carousel caption position / size"
+See `components/templates/TeamCarousel.js` and the `.carouselLayout*` classes in
+`components/templates/Templates.module.css`. Orientation is derived from the **natural**
+image dimensions loaded via `<img>`, not from config. If you want to force an orientation,
+add a per-item override in `data/teamData.js` and plumb it through.
+
+### "Optimize performance / reduce bundle size"
+- Biggest wins: image compression (TinyPNG) since `images.unoptimized: true` means the
+  browser downloads raw files.
+- Check `npm run build` output for any route over ~200 KB First Load JS.
+- Lazy-dynamic-import heavy libs (GSAP plugins are already deferred in `AppShell.js`).
+
+### "Add an API / form submission / dynamic content"
+You can't at runtime (static export). Options:
+- Use an external form service (Formspree, Netlify Forms, Google Forms embed).
+- Call a separate backend via `fetch` from a client component.
+- Host a small backend elsewhere and point to it.
+
+---
+
+## 6. Recovery procedures
+
+### `npm install` succeeds but something is missing from `node_modules`
+```bash
+rm -rf node_modules package-lock.json
+/opt/homebrew/opt/node@22/bin/npm install
+```
+If you specifically need to keep `package-lock.json` stable, just delete `node_modules` alone.
+
+### `Module not found: Can't resolve './...mjs'` in `vendor/framer-motion`
+iCloud partially synced. Re-extract:
+```bash
+rm -rf vendor/framer-motion
+tar -xzf framer-motion-11.18.2.tgz -C /tmp/
+mv /tmp/package vendor/framer-motion
+```
+
+### `.next 2/`, `.next-dev 3/`, `.next-stale-*/` appearing
+iCloud conflict copies. `rm -rf` any of them; they're cruft.
+
+### `ERR_INVALID_PACKAGE_CONFIG` during build
+You're on Node 24. Use Node 22:
+```bash
+PATH="/opt/homebrew/opt/node@22/bin:$PATH" npm run build
+```
+
+### Build succeeds but page looks stale
+Browser or CDN cache. Hard refresh; if deploying to DreamHost, wait for their CDN TTL or
+purge via their panel.
+
+---
+
+## 7. Testing & verification
+
+**There are no automated tests in this repo.** Verification is manual:
+
+1. `npm run dev`, visit affected routes at http://localhost:3000.
+2. Hard-refresh after code changes if you disabled auto-reload.
+3. `npm run build` to confirm static export succeeds. A successful build lists every route
+   with its size — check for unexpected ∗Server∗ markers (everything should be ○ Static or
+   ● SSG).
+4. Optional: `npx http-server out/` (or `python3 -m http.server -d out 8080`) to spot-check
+   the actual exported HTML.
+
+If you introduce real logic and want tests, Vitest + Testing Library would fit; no framework
+is installed yet — that's a deliberate tradeoff for a content-heavy marketing site.
+
+---
+
+## 8. Deployment (short form)
+
+```bash
+npm run build
+rsync -avz --delete out/ USER@SERVER:/path/to/webroot/
+```
+
+Upload the **contents** of `out/`, not `out/` itself. `index.html` belongs at the web root.
+DreamHost is the current host; Netlify / Vercel / Cloudflare Pages / S3+CloudFront all work
+with the same artifact. See `README.md` §Deployment for specifics.
+
+---
+
+## 9. Things you should probably not do without asking
+
+- Upgrade Next to 15.x.
+- Swap CSS Modules for Tailwind / styled-components.
+- Remove `vendor/framer-motion` or the `lib/framer-motion.js` shim.
+- Delete `scripts/prepare-next-runtime.mjs` — it exists for a real iCloud reason.
+- Move the repo off iCloud Desktop (breaks the owner's setup, not your call).
+- Push directly to `main` without running `npm run build` first.
+- Commit `out/`, `node_modules/`, `.next*/`, or any macOS ` N` duplicate file.
+
+---
+
+## 10. Current state snapshot (for grounding)
+
+- Main branch: `main` on `github.com/cifyr/DBFApp`.
+- Last verified build: Next 14.2.35 on Node v22.22.2, 14 static routes rendered, `out/` is
+  ~23 MB.
+- Notable uncommitted-at-time-of-last-audit files: multiple `.next N` / `.next-dev N`
+  duplicates, `app/layout 2.js` stale duplicate, numerous " 2" duplicated images under
+  `public/`. Treat ` N`-suffixed files as iCloud garbage unless you specifically confirm otherwise.
+- Known warning at install: `@studio-freight/lenis@1.0.42` is deprecated — the package has
+  been renamed to `lenis`. Not urgent but worth flagging in a dep update PR.
+
+End of briefing. When in doubt, prefer reading `data/*.js` and the component that consumes
+it before changing anything.

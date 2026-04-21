@@ -63,17 +63,24 @@
     width: 300px;
     background: var(--color-white-pure);
     padding: 15px 15px 50px 15px;
+    border: none;
     border-radius: 2px;
     box-shadow: var(--shadow-polaroid);
     transform: rotate(var(--rotation, 0deg));
     transition: transform var(--transition-base), box-shadow var(--transition-base);
-    cursor: pointer;
     will-change: transform, opacity;
+    text-align: left;
+    cursor: pointer;
 }
 
 .polaroid:hover {
     transform: rotate(0deg) scale(1.03) translateY(-8px);
     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+}
+
+.polaroid:focus-visible {
+    outline: 3px solid rgba(26, 51, 42, 0.28);
+    outline-offset: 6px;
 }
 
 .imageFrame {
@@ -128,6 +135,291 @@
 }
 
 /* --------------------------------------------------------------------------
+   Modal
+   -------------------------------------------------------------------------- */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    background: rgba(17, 27, 23, 0.58);
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
+}
+
+.modalShell {
+    width: min(1120px, 100%);
+    max-height: calc(100vh - (var(--space-lg) * 2));
+    background: linear-gradient(180deg, #fcfcf8 0%, #f5f1e9 100%);
+    border-radius: 28px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.24);
+    overflow: auto;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding: var(--space-xl) var(--space-xl) var(--space-lg);
+    border-bottom: 1px solid rgba(26, 51, 42, 0.08);
+}
+
+.modalHeaderCopy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.modalEyebrow {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-caption);
+}
+
+.modalTitle {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.modalMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    color: var(--color-caption);
+    font-size: var(--text-sm);
+    font-weight: 600;
+}
+
+.modalMeta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(47, 79, 79, 0.08);
+}
+
+.closeButton {
+    flex-shrink: 0;
+    min-height: 44px;
+    padding: 0.85rem 1.2rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.closeButton:hover,
+.closeButton:focus-visible {
+    transform: translateY(-2px);
+    opacity: 0.92;
+}
+
+.modalBody {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: var(--space-lg);
+    padding: 0 var(--space-xl) var(--space-xl);
+}
+
+.carouselCard,
+.infoCard {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(26, 51, 42, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(22, 32, 28, 0.08);
+}
+
+.carouselCard {
+    padding: var(--space-md);
+}
+
+.carouselFrame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #e8e3d8;
+    aspect-ratio: 16 / 10;
+}
+
+.carouselImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carouselButton {
+    position: absolute;
+    top: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    background: rgba(17, 27, 23, 0.7);
+    color: var(--color-white);
+    font-size: 2rem;
+    line-height: 1;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.carouselButtonPrev {
+    left: 1rem;
+}
+
+.carouselButtonNext {
+    right: 1rem;
+}
+
+.carouselFooter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-top: var(--space-md);
+}
+
+.carouselCounter {
+    color: var(--color-caption);
+    font-size: var(--text-sm);
+    font-weight: 700;
+}
+
+.carouselCaption {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.carouselDots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    padding-top: var(--space-md);
+}
+
+.carouselDot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border: none;
+    border-radius: 50%;
+    background: rgba(26, 51, 42, 0.15);
+    cursor: pointer;
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.carouselDotActive {
+    background: var(--color-navy);
+    transform: scale(1.15);
+}
+
+.infoColumn {
+    display: grid;
+    gap: var(--space-lg);
+    align-content: start;
+}
+
+.infoCard {
+    padding: var(--space-lg);
+}
+
+.infoLabel {
+    display: inline-flex;
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-caption);
+}
+
+.infoText {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.infoCard .infoText + .infoText {
+    margin-top: var(--space-sm);
+}
+
+.infoList {
+    display: grid;
+    gap: 0.75rem;
+    padding-left: 1.25rem;
+    color: var(--color-text);
+}
+
+.reportLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.85rem 1.15rem;
+    border-radius: 999px;
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-weight: 700;
+}
+
+.reportLink:hover {
+    color: var(--color-white);
+    opacity: 0.92;
+}
+
+.leadershipCard {
+    grid-column: 1 / -1;
+}
+
+.leadershipHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+}
+
+.leadershipHeader .infoText {
+    max-width: 30rem;
+}
+
+.leadershipMedia,
+.leadershipPlaceholder {
+    margin-bottom: var(--space-md);
+    border-radius: 20px;
+}
+
+.leadershipMedia {
+    overflow: hidden;
+    background: #ebe5d8;
+}
+
+.leadershipImage {
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+}
+
+.leadershipPlaceholder {
+    display: grid;
+    place-items: center;
+    min-height: 240px;
+    padding: var(--space-lg);
+    border: 1px dashed rgba(26, 51, 42, 0.2);
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--color-caption);
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
@@ -149,6 +441,34 @@
         width: 240px;
         padding: 12px 12px 40px 12px;
     }
+
+    .modalOverlay {
+        padding: var(--space-sm);
+    }
+
+    .modalShell {
+        max-height: calc(100vh - (var(--space-sm) * 2));
+        border-radius: 22px;
+    }
+
+    .modalHeader,
+    .modalBody {
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
+    }
+
+    .modalHeader {
+        flex-direction: column;
+    }
+
+    .modalBody {
+        grid-template-columns: 1fr;
+        padding-bottom: var(--space-lg);
+    }
+
+    .leadershipHeader {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 480px) {
@@ -158,5 +478,26 @@
 
     .planeName {
         font-size: 1.2rem;
+    }
+
+    .modalHeader,
+    .modalBody {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+    }
+
+    .modalTitle {
+        font-size: 1.8rem;
+    }
+
+    .carouselButton {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.6rem;
+    }
+
+    .infoCard,
+    .carouselCard {
+        padding: var(--space-sm);
     }
 }

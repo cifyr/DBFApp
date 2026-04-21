@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { presidents, formatPersonAcademicInfo } from '@/data/people';
+import ProgressiveHeadshot from './ProgressiveHeadshot';
 import styles from './MeetThePresidents.module.css';
 
 if (typeof window !== 'undefined') {
@@ -57,13 +58,11 @@ export default function MeetThePresidents() {
                             className={styles.presidentCard}
                         >
                             <div className={styles.imageWrapper}>
-                                <img
+                                <ProgressiveHeadshot
                                     src={president.image}
                                     alt={president.name}
                                     className={styles.headshot}
-                                    onError={(e) => {
-                                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(president.name)}&background=1C332A&color=fff&size=200`;
-                                    }}
+                                    fallbackName={president.name}
                                 />
                             </div>
                             <h3 className={styles.name}>{president.name}</h3>

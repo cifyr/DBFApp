@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from '@/lib/framer-motion';
 import { homeContent } from '@/data/homeContent';
 import { teamData } from '@/data/teamData';
 import styles from './Navbar.module.css';
