@@ -23,6 +23,18 @@ export default function PolaroidGallery() {
     const [activePlaneIndex, setActivePlaneIndex] = useState(null);
     const [activeSlide, setActiveSlide] = useState(0);
     const [isMounted, setIsMounted] = useState(false);
+    const [hasClickedAnyPolaroid, setHasClickedAnyPolaroid] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        try {
+            if (window.localStorage.getItem('dbf-pastAircraftInteracted') === '1') {
+                setHasClickedAnyPolaroid(true);
+            }
+        } catch (err) {
+            // localStorage may be unavailable (private mode); fall back to in-memory state only
+        }
+    }, []);
 
     const activePlane = activePlaneIndex === null ? null : aircraft[activePlaneIndex];
     const activeGallery = activePlane?.gallery ?? [];
@@ -208,6 +220,16 @@ export default function PolaroidGallery() {
     const openPlaneModal = (index) => {
         setActivePlaneIndex(index);
         setActiveSlide(0);
+        if (!hasClickedAnyPolaroid) {
+            setHasClickedAnyPolaroid(true);
+            try {
+                if (typeof window !== 'undefined') {
+                    window.localStorage.setItem('dbf-pastAircraftInteracted', '1');
+                }
+            } catch (err) {
+                // ignore
+            }
+        }
     };
 
     const closePlaneModal = () => {
@@ -377,15 +399,24 @@ export default function PolaroidGallery() {
                             )}
                         </div>
 
-                        {(activePlane.leadershipImage?.src || activePlane.leadArchitecture?.length > 0) && (
+                        {(activePlane.leadershipImage?.src
+                            || activePlane.leadershipRoster?.length > 0
+                            || activePlane.leadArchitecture?.length > 0) && (
                             <section className={`${styles.infoCard} ${styles.leadershipCard}`}>
                                 <div className={styles.leadershipHeader}>
                                     <span className={styles.infoLabel}>Leadership</span>
-                                    {activePlane.leadershipImage?.src && activePlane.leadershipImage?.caption && (
+                                    {activePlane.leadershipNote && (
                                         <p className={styles.infoText}>
-                                            {activePlane.leadershipImage.caption}
+                                            {activePlane.leadershipNote}
                                         </p>
                                     )}
+                                    {!activePlane.leadershipNote
+                                        && activePlane.leadershipImage?.src
+                                        && activePlane.leadershipImage?.caption && (
+                                            <p className={styles.infoText}>
+                                                {activePlane.leadershipImage.caption}
+                                            </p>
+                                        )}
                                 </div>
 
                                 {activePlane.leadershipImage?.src && (
@@ -398,13 +429,27 @@ export default function PolaroidGallery() {
                                     </div>
                                 )}
 
-                                {activePlane.leadArchitecture?.length > 0 && (
-                                    <ul className={styles.infoList}>
-                                        {activePlane.leadArchitecture.map((item) => (
-                                            <li key={item}>{item}</li>
+                                {activePlane.leadershipRoster?.length > 0 && (
+                                    <dl className={styles.rosterGrid}>
+                                        {activePlane.leadershipRoster.map((entry) => (
+                                            <div key={entry.role} className={styles.rosterEntry}>
+                                                <dt className={styles.rosterRole}>{entry.role}</dt>
+                                                <dd className={styles.rosterNames}>
+                                                    {entry.names.join(', ')}
+                                                </dd>
+                                            </div>
                                         ))}
-                                    </ul>
+                                    </dl>
                                 )}
+
+                                {activePlane.leadArchitecture?.length > 0
+                                    && !(activePlane.leadershipRoster?.length > 0) && (
+                                        <ul className={styles.infoList}>
+                                            {activePlane.leadArchitecture.map((item) => (
+                                                <li key={item}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    )}
                             </section>
                         )}
                     </div>
@@ -447,6 +492,26 @@ export default function PolaroidGallery() {
                                     <span className={styles.planePlacement}>{plane.placement}</span>
                                 </div>
                             </div>
+                            {index === 1 && !hasClickedAnyPolaroid && (
+                                <div className={styles.clickHint} aria-hidden="true">
+                                    <div className={styles.clickHintRipple} />
+                                    <svg
+                                        className={styles.clickHintCursor}
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M5 3L19.5 13.2L12.2 14.2L8.5 21L5 3Z"
+                                            fill="#ffffff"
+                                            stroke="#1a332a"
+                                            strokeWidth="1.5"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                    <span className={styles.clickHintLabel}>Click to explore</span>
+                                </div>
+                            )}
                         </button>
                     ))}
                 </div>
