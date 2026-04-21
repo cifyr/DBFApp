@@ -61,11 +61,6 @@ const createLegacyAircraft = ({
             alt: `${name} aircraft`,
             caption: `${name} during the ${year} Design-Build-Fly season.`,
         },
-        {
-            src: photos.home.about,
-            alt: 'DBF team archive photo',
-            caption: 'Archive team photo from the broader DBF collection.',
-        },
     ],
     leadershipImage: leadershipImage ?? null,
 });
@@ -139,6 +134,13 @@ export const homeContent = {
                 overview: 'Ursa Major was the team\'s entry for the 2024-25 AIAA Design/Build/Fly X-1 Supersonic Test Flight Program. The aircraft had to fly a delivery mission, a captive carry of externally mounted fuel tanks and the X-1 test vehicle, and a launch mission that successfully released the X-1 vehicle into a designated landing area.',
                 competitionFocus: 'launching an X-1 glider from an external carrier aircraft while managing fuel-tank drag and post-release center-of-gravity shifts',
                 buildGist: 'A conventional single-motor, tricycle, high-wing aircraft with a 1.83 m wingspan, wing loading of 8.78 kg/m² (M2) and 5.83 kg/m² (M3), a 1.18 thrust-to-weight ratio, and a predicted cruise of 31.5 m/s. Carbon-fiber wing spars mounted the fuel tanks directly, and the X-1 glider was held by a servo-lock release with a pull-switch strobe activation.',
+                competitionStructure: [
+                    'M1 — delivery flight verifying design and flight capability of the carrier aircraft.',
+                    'M2 — captive carry of externally mounted fuel tanks plus the X-1 test vehicle around the course.',
+                    'M3 — launch flight that successfully released the X-1 glider into a designated landing area.',
+                    'GM — full installation-to-release demonstration of fuel tanks and test vehicle on the flight aircraft.',
+                    'Predicted total mission score of 5.78 / 7, design report finished 26th.',
+                ],
                 reportUrl: '/reports/2025-Ursa-Major-Design-Report.pdf',
                 reportLabel: 'Download the 2024-25 design report (PDF)',
                 leadershipNote: '2024-25 leadership that designed and built Ursa Major.',
@@ -165,6 +167,13 @@ export const homeContent = {
                 overview: 'United Bearlines was the team\'s entry for the 2023-24 AIAA Design/Build/Fly competition, themed around medical and urban-taxi transport. The aircraft flew a staging flight with a Crew payload, a medical transport mission carrying EMTs, a patient on a gurney and a medical supplies cabinet, and an urban taxi flight that completed as many laps as possible in a five-minute window with Crew and passengers.',
                 competitionFocus: 'carrying heavy mission payloads, swapping passenger/medical configurations quickly, and taking off within a tight 20 ft field length',
                 buildGist: 'A conventional single-motor, low-wing, bow-tricycle aircraft with a 1.34 m wingspan, ~12 kg/m² wing loading, a 2.18 thrust-to-weight ratio, and a predicted cruise of 34.08 m/s. The interior was laid out around easy M2/M3/GM payload access, with passenger, pilot, and medical inserts held in place with Velcro and dual loading hatches.',
+                competitionStructure: [
+                    'M1 — staging flight with the Crew payload, verifying basic function of the aircraft.',
+                    'M2 — medical transport with Crew, EMTs, a patient on a gurney, and a medical supplies cabinet.',
+                    'M3 — urban taxi flight: as many scoring laps as possible around the course in a five-minute window carrying Crew and passengers.',
+                    'GM — timed demonstration of the aircraft\'s ability to change mission configurations.',
+                    'Predicted total mission score of 5.4 / 7; placed 19th overall at competition.',
+                ],
                 reportUrl: '/reports/2024-United-Bearlines-Design-Report.pdf',
                 reportLabel: 'Download the 2023-24 design report (PDF)',
                 resources: [
@@ -194,6 +203,13 @@ export const homeContent = {
                 overview: 'Bear Force One was the team\'s entry for the 2022-23 AIAA Design/Build/Fly competition. The aircraft had to fly a staging flight, a surveillance mission carrying an Electronics Package as fast as possible around the course, and a jamming flight with a three-lap timed run while carrying a Jamming Antenna externally mounted to a wing.',
                 competitionFocus: 'fast surveillance laps with an internal payload and a wing-mounted jamming antenna that demanded clean external aerodynamics',
                 buildGist: 'A conventional single-motor, high-wing aircraft on bow tricycle landing gear with a 1310 mm wingspan, roughly 11 kg/m² max wing loading, a 1.38 thrust-to-weight ratio, and a predicted cruise of 37.78 m/s. The rear fuselage was optimized around M2 Electronics Package access, and the M3 jamming antenna attached through a shared ground fixture to keep the wing interface consistent.',
+                competitionStructure: [
+                    'M1 — staging flight verifying the function of the aircraft.',
+                    'M2 — surveillance flight carrying an internal Electronics Package around the course as fast as possible.',
+                    'M3 — jamming flight: three timed laps while carrying a Jamming Antenna mounted externally to the wing.',
+                    'GM — structural margin demonstration of the airframe on the ground.',
+                    'Predicted total mission score of 5.87 / 7; design report placed 16th, final finish 29th.',
+                ],
                 reportUrl: '/reports/2023-Bear-Force-One-Design-Report.pdf',
                 reportLabel: 'Download the 2022-23 design report (PDF)',
                 resources: [
@@ -221,6 +237,13 @@ export const homeContent = {
                 overview: 'Pflyzer was the team\'s entry for the 2021-22 AIAA Design/Build/Fly competition, themed around vaccine delivery. The aircraft had to fly a deployment verification flight, a staging mission carrying 40 syringes as fast as possible, and a vaccine delivery flight with repeated takeoffs, landings, and package deployments. The design report finished 3rd in the field — one of the team\'s strongest-ever placements.',
                 competitionFocus: 'rapid-cycle flights that land, deploy a package, and return to the air while maintaining low-risk stability and takeoff margin',
                 buildGist: 'A conventional single-motor, low-wing taildragger with a 5° dihedral and a 2400 mm wingspan, ~6 kgf/m² wing loading, a 1.52 thrust-to-weight ratio, and a predicted cruise of 22.5 m/s. The taildragger stance gave an 11° takeoff angle of attack, and a two-stage (servo release + ramp lowering) deployment system placed packages safely without tripping the shock sensors.',
+                competitionStructure: [
+                    'M1 — deployment flight verifying the function of the aircraft.',
+                    'M2 — staging flight carrying a payload of 40 syringes around the course as fast as possible.',
+                    'M3 — vaccine delivery flight: repeated takeoffs and landings with a package deployment after each landing.',
+                    'GM — timed demonstration of the aircraft.',
+                    'Predicted total mission score of 6.283 / 7; design report placed 3rd (the team\'s strongest-ever DR result), final finish 11th.',
+                ],
                 reportUrl: '/reports/2022-Pflyzer-Design-Report.pdf',
                 reportLabel: 'Download the 2021-22 design report (PDF)',
                 resources: [
@@ -247,6 +270,13 @@ export const homeContent = {
                 overview: 'Red Bearon was the team\'s entry for the 2020-21 AIAA Design/Build/Fly, held virtually because of COVID-19 restrictions. With no in-person fly-off and many parallels to the 2020 mission, WUDBF iterated on the Atlas airframe to cut risk while still demonstrating all required capabilities through video submissions.',
                 competitionFocus: 'a virtual competition that rewarded a proven, low-risk airframe carrying sensors and able to trail an object behind the aircraft',
                 buildGist: 'A conventional dual-motor, high-wing aircraft derived from the 2020 Atlas — with a 1.524 m (5 ft) wingspan, balsa wood construction, Fowler flaps, external storage, and internal storage through a nose-cone opening. Propulsion was tuned for 30 m/s cruise in M2 and 20 m/s in M3, and the airframe was sized to carry four sensors at about 5.9 kg takeoff weight.',
+                competitionStructure: [
+                    'No in-person fly-off — the 2021 competition ran virtually because of COVID-19 restrictions.',
+                    'Video submissions replaced the physical mission flights, with carry capacity and trailing-object capability among the scored criteria.',
+                    'Design iterated on the 2020 Atlas airframe to lower build risk and prioritize member safety during the pandemic.',
+                    'Sized to carry four sensors at around 5.9 kg M2 takeoff weight.',
+                    'Estimated total mission score of 5.53; design report placed 55th, final finish 76th.',
+                ],
                 reportUrl: '/reports/2021-Red-Bearon-Design-Report.pdf',
                 reportLabel: 'Download the 2020-21 design report (PDF)',
                 leadershipNote: '2020-21 leadership that designed and built Red Bearon during the COVID-19 virtual competition.',
@@ -270,6 +300,14 @@ export const homeContent = {
                 overview: 'The Atlas was the team\'s entry for the 2019-20 AIAA Design/Build/Fly competition. The aircraft had to fly a short-takeoff passenger transport and a banner-tow mission, with scoring that pushed for raw payload capacity and high-cruise laps. The 2020 in-person fly-off was cancelled due to COVID-19.',
                 competitionFocus: 'carrying up to 21 passengers while still flying short-takeoff passenger laps and a trailing banner mission',
                 buildGist: 'A conventional dual-motor, high-wing aircraft on tricycle landing gear with a 1.524 m (5 ft) wingspan, balsa wood construction, Fowler flaps, external storage, and internal storage via nose-cone opening. The propulsion package was tuned for 35 m/s cruise in M2 and 20 m/s in M3, and the aircraft carried 21 passengers plus luggage at about 7.3 kg M2 takeoff weight.',
+                competitionStructure: [
+                    'M1 — staging flight verifying function of the aircraft.',
+                    'M2 — passenger transport mission carrying up to 21 passengers plus luggage.',
+                    'M3 — banner-tow mission towing a 0.50 × 0.25 m banner at altitude.',
+                    'GM — structural demonstration on the ground.',
+                    'In-person fly-off cancelled due to COVID-19; scoring ended at the design-report phase (52nd) which was also the final placement.',
+                    'Estimated total mission score of 5.82.',
+                ],
                 reportUrl: '/reports/2020-Atlas-Design-Report.pdf',
                 reportLabel: 'Download the 2019-20 design report (PDF)',
                 leadershipNote: '2019-20 leadership that designed and built The Atlas.',
@@ -293,6 +331,12 @@ export const homeContent = {
                 overview: 'The Spirit of St. Louis Woodhams was the team\'s entry for the 2018-19 AIAA Design/Build/Fly competition in Tucson, AZ. The season was themed around aircraft-carrier operations — short takeoffs and wing folding for stowed storage — with scoring dominated by Mission 3 lap count.',
                 competitionFocus: 'short-takeoff carrier operations and a stowable airframe while pushing Mission 3 lap counts to maximize scoring',
                 buildGist: 'A single-engine pusher in the spirit of an F-35B, with a tapered swept wing, H-tail, and trailing-edge flaps. Thrust vectoring gave it the same static stability as a conventional aircraft with a much shorter takeoff distance. The airframe was sized to meet a ≥ 4 ft wingspan and a 3 ft × 2 ft stowed footprint.',
+                competitionStructure: [
+                    'Season themed around aircraft-carrier operations — short takeoffs and wing folding for stowed storage.',
+                    'Airframe had to fit a 3 ft × 2 ft stowed box with a ≥ 4 ft wingspan once deployed.',
+                    'Mission 3 lap count dominated scoring, pushing the design toward high cruise speed and efficient turnaround.',
+                    'Competition held in Tucson, AZ; design report placed 36th, final finish 64th.',
+                ],
                 reportUrl: '/reports/2019-Spirit-Design-Report.pdf',
                 reportLabel: 'Download the 2018-19 design report (PDF)',
                 resources: [
@@ -319,6 +363,11 @@ export const homeContent = {
                 overview: 'The Spruce Zeus was the team\'s second-ever competition aircraft — a year spent maturing the design, manufacturing, and flight-test processes that the founding team had sketched out the season before.',
                 competitionFocus: 'maturing the team\'s workflow — moving from a first-year prototype culture to a more organized design, build, and test cycle',
                 buildGist: 'A lightweight, buildable airframe with simple subsystem integration, chosen so a small, fast-growing team could manufacture, assemble, and iterate without heavy tooling.',
+                competitionStructure: [
+                    'Second-ever WUDBF entry — the team was still growing from its founding roster and building out its subteam structure.',
+                    'Season focused on running the full design/build/fly cycle end-to-end, rather than chasing a specialized mission profile.',
+                    'Design report placed 45th; final finish 64th.',
+                ],
             }),
             createLegacyAircraft({
                 name: 'The Wrighton Flyer',
@@ -329,6 +378,11 @@ export const homeContent = {
                 overview: 'The Wrighton Flyer was the founding year\'s aircraft — WUDBF\'s very first entry in AIAA Design/Build/Fly. A small co-founder-led team of ten got the whole thing from blank page to a 12th-place competition finish.',
                 competitionFocus: 'standing up a brand-new competition team and proving its design, manufacturing, and flight-test process worked end-to-end',
                 buildGist: 'A dependable, easy-to-understand configuration that a ten-person founding roster could actually manufacture, assemble, test, and improve under a tight first-year learning curve.',
+                competitionStructure: [
+                    'First-ever WUDBF entry — the team launched in 2016-17 with ten members and no prior infrastructure.',
+                    'Season focused on standing up the team, sourcing materials, and proving the full design/build/fly workflow.',
+                    'Design report placed 83rd, but the aircraft performed well at the fly-off and the team finished 12th overall — one of the team\'s strongest placements ever.',
+                ],
                 leadArchitecture: [
                     'Co-founders Peter Sharpe (President) and Christophe Foyer (Vice President / Treasurer) led a ten-person competition team.',
                     'Technical ownership was spread across the earliest members, who handled aircraft layout, structures, propulsion, manufacturing, and testing together.',
