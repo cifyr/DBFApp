@@ -229,6 +229,7 @@
 .modalBody {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: start;
     gap: var(--space-lg);
     padding: 0 var(--space-xl) var(--space-xl);
 }
@@ -373,6 +374,26 @@
 .reportLink:hover {
     color: var(--color-white);
     opacity: 0.92;
+}
+
+.resourceList {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-sm) 0 0;
+    display: grid;
+    gap: 0.4rem;
+    font-size: var(--text-sm);
+}
+
+.resourceList a {
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 600;
+}
+
+.resourceList a:hover {
+    opacity: 0.8;
 }
 
 .leadershipCard {

@@ -320,17 +320,6 @@ export default function TeamCarousel({ carousel }) {
         .slice(0, activeIndex)
         .reduce((totalWidth, size) => totalWidth + (size?.width || 0), 0);
 
-    const activeNaturalSize = imageSizes[activeIndex];
-    const activeOrientation = activeNaturalSize
-        ? activeNaturalSize.height > activeNaturalSize.width ? 'portrait' : 'landscape'
-        : 'landscape';
-    const hasCaptionContent = Boolean(activeItem?.caption || activeItem?.description);
-    const layoutClass = hasCaptionContent
-        ? activeOrientation === 'portrait'
-            ? styles.carouselLayoutPortrait
-            : styles.carouselLayoutLandscape
-        : '';
-
     return (
         <section className={styles.carouselSection} aria-label={heading}>
             <div className={styles.carouselHeader}>
@@ -364,13 +353,10 @@ export default function TeamCarousel({ carousel }) {
             </div>
 
             <div
-                className={`${styles.carouselLayout} ${layoutClass}`}
-                style={{ '--carousel-max-height': maxHeight }}
-            >
-            <div
                 ref={stageRef}
                 className={styles.carouselStage}
                 style={{
+                    '--carousel-max-height': maxHeight,
                     ...(stageHeight ? { minHeight: `${stageHeight}px` } : {}),
                 }}
             >
@@ -414,7 +400,7 @@ export default function TeamCarousel({ carousel }) {
                 </div>
             </div>
 
-            {hasCaptionContent && (
+            {(activeItem?.caption || activeItem?.description) && (
                 <div className={styles.carouselCaption}>
                     {activeItem.caption && (
                         <p className={styles.carouselCaptionTitle}>{activeItem.caption}</p>
@@ -424,7 +410,6 @@ export default function TeamCarousel({ carousel }) {
                     )}
                 </div>
             )}
-            </div>
 
             {hasMultipleItems && (
                 <div className={styles.carouselDots} role="tablist" aria-label={`${heading} slides`}>
